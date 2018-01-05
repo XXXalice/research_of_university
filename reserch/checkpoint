@@ -1,0 +1,2 @@
+model_checkpoint_path: "/Users/umemiya/Desktop/ml/reserch/model.ckpt"
+all_model_checkpoint_paths: "/Users/umemiya/Desktop/ml/reserch/model.ckpt"
