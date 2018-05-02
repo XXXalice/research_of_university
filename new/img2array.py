@@ -31,7 +31,7 @@ class Img2Array:
                 img = cv2.imread(self.img_path + img_folder + l[0])
                 img = cv2.resize(img, (28, 28))
                 #画像を一次元化して正規化
-                images.append(img.flatten().astype(np.float32)/255.0)
+                images.append(img.astype(np.float32)/255.0)
                 tmp = np.zeros(base_param.NUM_CLASSES)
                 tmp[int(l[1])] = 1
                 labels.append(tmp)
