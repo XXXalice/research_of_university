@@ -17,7 +17,7 @@ IMAGE_SIZE = 28
 UA = ''
 
 #対象の画像の収集枚数
-IMAGE_NUM = 150
+IMAGE_NUM = 15
 
 #対象「ではない」画像の1グループの枚数（1グループ*5枚の画像を収集します）
-ALT_IMAGE_NUM = 30
+ALT_IMAGE_NUM = 3
