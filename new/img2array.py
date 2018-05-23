@@ -6,7 +6,8 @@ class Img2Array:
     """
     画像をnumpy配列に変換
     """
-    def __init__(self,img_path='./img/'+base_param.FOLDER+'/'):
+    def __init__(self,name):
+        img_path = './img/' + name +'/'
         self.img_path = img_path
 
     def make_array(self,train):

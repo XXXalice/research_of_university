@@ -43,7 +43,7 @@ def make_model(shape):
     return model
 
 def training(model, image, label):
-    return model.fit(image, label, nb_epoch=100, batch_size=10)
+    return model.fit(image, label, epochs=100, batch_size=10)
 
 
 if __name__ == '__main__':

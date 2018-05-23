@@ -39,6 +39,8 @@ def url_search(keyword, n=base_param.IMAGE_NUM):
     search_words.append(keyword)
     search_words += near_words
 
+    fetcher = Fetcher(base_param.UA)
+
     for i, search_word in enumerate(search_words):
         #こっからはyahooで一度に引っ張ってこれる数が60枚までなので苦肉の策でスクレイピング
 
@@ -89,6 +91,7 @@ def url_search(keyword, n=base_param.IMAGE_NUM):
     return (img_urls, alt_img_urls) #タプルで返すよ〜
 
 def image_collector_in_url(urls, fname):
+    fetcher = Fetcher()
     d = './img/'+str(fname)
     if not os.path.exists(d):
         os.mkdir(d)
@@ -99,9 +102,7 @@ def image_collector_in_url(urls, fname):
         ratio = int(len(cat)*base_param.TRAIN_PAR/100)
         split_cat = list((cat[:ratio],cat[ratio:]))
         for train_or_test, img_urls in enumerate(split_cat):#0でtrain,1でtest
-
             for img_url in img_urls:
-
                 sleep(0.1) #礼儀
                 img, mime = fetcher.fetch(img_url)
                 if not mime or not img:
@@ -118,21 +119,27 @@ def image_collector_in_url(urls, fname):
 
                 if train_or_test == 0: #trainフォルダに画像を配置する場合
                     flag = '/train/'
+                    txt_name = '/train_list.txt'
                 else: #testフォルダに画像を配置する場合
                     flag = '/test/'
+                    txt_name = '/test_list.txt'
 
-                img_name = str(true_or_false) + '_{number:03}{ext}'.format(number=count, ext=ext)
-                file = os.path.join(d + flag, img_name)
-                with open(file, mode='wb') as f:
-                    f.write(img)
-                    print('download success:', img_url)
+                text = os.path.join(d + txt_name)
+                with open(text, 'a') as txt: #画像を読み込むためのテキストファイルを作成
+                    img_name = str(true_or_false) + '_{number:03}{ext}'.format(number=count, ext=ext)
+                    file = os.path.join(d + flag, img_name)
+                    txtline = img_name + ' ' + str(true_or_false) + "\n"
+                    txt.write(txtline) #テキストファイルにファイル名とラベルを書き込む
+                    with open(file, 'wb') as f:
+                        f.write(img)
+                        print('info: 画像のダウンロードに成功しました:', img_url)
                 count += 1
+
 
     return count
 
 if __name__ == '__main__':
 
-    fetcher = Fetcher(base_param.UA)
     print('欲しいモデルのワードを入力してください')
     keyword = input('>> ')
     urls = url_search(keyword) #タプルがかえってくるよ〜
