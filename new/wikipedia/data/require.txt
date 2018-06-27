@@ -1,2 +1,0 @@
-http://www.cl.ecei.tohoku.ac.jp/~m-suzuki/jawiki_vector/
-よりバイナリファイルをDLしてこのフォルダに配置してください
