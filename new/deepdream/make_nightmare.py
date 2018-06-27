@@ -103,14 +103,22 @@ shrunk_original_img = imgprc.resize_img(img, successive_shapes[0])
 
 for shape in successive_shapes:
     print('Processing image shape', shape)
+<<<<<<< HEAD
     img = imgprc.resize_img(img, (bp.IMAGE_SIZE, bp.IMAGE_SIZE))
+=======
+    img = imgprc.resize_img(img, (14, 14))
+>>>>>>> 464eb5bf425b6e19ab1639478967f9249eaa0137
     img = gradient_ascent(img,
                           iterations=iterations,
                           step=step,
                           max_loss=max_loss
                           )
 
+<<<<<<< HEAD
     upscaled_shrunk_original_img = imgprc.resize_img(shrunk_original_img, (bp.IMAGE_SIZE, bp.IMAGE_SIZE))
+=======
+    upscaled_shrunk_original_img = imgprc.resize_img(shrunk_original_img, (14, 14))
+>>>>>>> 464eb5bf425b6e19ab1639478967f9249eaa0137
     same_size_original = imgprc.resize_img(original_img, (14, 14))
     lost_detail = same_size_original - upscaled_shrunk_original_img
     img += lost_detail
