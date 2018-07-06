@@ -1,6 +1,5 @@
 USE_FOLDER = 'anime'
 
-<<<<<<< HEAD
 #モデル構築の際使用するCNN
 USE_MODEL = 'original1'
 
@@ -26,7 +25,4 @@ ALT_IMAGE_NUM = 10
 MODEL_PATH = '../src/'
 
 #deepdreamで使用するモデル
-MODEL_DEEPDREAM = 'panda6_model.h5'
-=======
-USE_IMAGE = 'miu'
->>>>>>> 464eb5bf425b6e19ab1639478967f9249eaa0137
+MODEL_DEEPDREAM = ''
