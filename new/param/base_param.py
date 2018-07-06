@@ -10,7 +10,7 @@ TRAIN_PAR = 70
 NUM_CLASSES = 2
 
 #画像の一辺のサイズ
-IMAGE_SIZE = 50
+IMAGE_SIZE = 100
 
 #画像収集に使用する際のユーザーエージェント偽装（デフォはpython）
 UA = ''
@@ -26,3 +26,6 @@ MODEL_PATH = '../src/'
 
 #deepdreamで使用するモデル
 MODEL_DEEPDREAM = ''
+
+#水増し用フォルダ
+GENARATE_FOLDER = ['./img/abe/train','./img/abe/test']
