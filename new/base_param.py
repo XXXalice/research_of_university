@@ -13,13 +13,13 @@ IMAGE_SIZE = 28
 UA = ''
 
 #対象の画像の収集枚数
-IMAGE_NUM = 50
+IMAGE_NUM = 5
 
 #対象「ではない」画像の1グループの枚数（1グループ*5枚の画像を収集します）
-ALT_IMAGE_NUM = 10
+ALT_IMAGE_NUM = 1
 
 #モデルのパス
-MODEL_PATH = '../src/'
+MODEL_PATH = './trained_model'
 
 #deepdreamで使用するモデル
 MODEL_DEEPDREAM = 'doraemon_model.h5'
