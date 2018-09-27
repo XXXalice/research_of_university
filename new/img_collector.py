@@ -5,7 +5,7 @@ import os
 import sys
 from bs4 import BeautifulSoup
 from time import sleep
-from param import base_param
+import base_param
 from wikipedia.near_word import near_word
 
 class Fetcher:
@@ -27,6 +27,8 @@ class Fetcher:
 
         return content, mime
 
+    
+
 def url_search(keyword, n=base_param.IMAGE_NUM):
     code = '&ei=UTF-8'
     img_link_elem = [] #対象データのクエリを格納する
@@ -42,7 +44,6 @@ def url_search(keyword, n=base_param.IMAGE_NUM):
     fetcher = Fetcher(base_param.UA)
 
     for i, search_word in enumerate(search_words):
-        #こっからはyahooで一度に引っ張ってこれる数が60枚までなので苦肉の策でスクレイピング
 
         #対象データを収集する場合
         if i == 0:
@@ -56,19 +57,19 @@ def url_search(keyword, n=base_param.IMAGE_NUM):
                     last_num = i
                     url = ('https://search.yahoo.co.jp/image/search?n=60&p={}{}' + code).format(quote(search_word), i)
                     byte_content, mime = fetcher.fetch(url)
-                    soup = BeautifulSoup(byte_content.decode('UTF-8'), 'html.parser')
+                    soup = BeautifulSoup(byte_content.decode('UTF-8'), 'lxml')
                     elem = soup.find_all('a', attrs={'target': 'imagewin'})
                     img_link_elem.extend(elem)
                 if rem != 0:
                     url = ('https://search.yahoo.co.jp/image/search?n={}&p={}{}' + code).format(rem, quote(search_word), last_num)
                     byte_content, mime = fetcher.fetch(url)
-                    soup = BeautifulSoup(byte_content.decode('UTF-8'), 'html.parser')
+                    soup = BeautifulSoup(byte_content.decode('UTF-8'), 'lxml')
                     add_elem = soup.find_all('a', attrs={'target': 'imagewin'})
                     img_link_elem.extend(add_elem)
             else: #要求画像が60枚未満の時
                 url = ('https://search.yahoo.co.jp/image/search?n={}&p={}' + code).format(n, quote(search_word))
                 byte_content, mime = fetcher.fetch(url)
-                soup = BeautifulSoup(byte_content.decode('UTF-8'), 'html.parser')
+                soup = BeautifulSoup(byte_content.decode('UTF-8'), 'lxml')
                 elem = soup.find_all('a', attrs={'target': 'imagewin'})
                 img_link_elem.extend(elem)
 
@@ -76,7 +77,7 @@ def url_search(keyword, n=base_param.IMAGE_NUM):
         else:
             url = ('https://search.yahoo.co.jp/image/search?n={}&p={}'.format(base_param.ALT_IMAGE_NUM, quote(search_word)))
             byte_content, mime = fetcher.fetch(url)
-            soup = BeautifulSoup(byte_content.decode('UTF-8'), 'html.parser')
+            soup = BeautifulSoup(byte_content.decode('UTF-8'), 'lxml')
             elem = soup.find_all('a', attrs={'target': 'imagewin'})
             alt_img_link_elem.extend(elem)
 
@@ -85,13 +86,14 @@ def url_search(keyword, n=base_param.IMAGE_NUM):
 
     img_urls = list(set(img_urls))
     alt_img_urls = list(set(alt_img_urls))
+    print(img_urls)
 
     print(len(img_urls), len(alt_img_urls))
 
     return (img_urls, alt_img_urls) #タプルで返すよ〜
 
 def image_collector_in_url(urls, fname):
-    fetcher = Fetcher()
+    fetcher = Fetcher(base_param.UA)
     d = './img/'+str(fname)
     if not os.path.exists(d):
         os.mkdir(d)
@@ -103,6 +105,7 @@ def image_collector_in_url(urls, fname):
         split_cat = list((cat[:ratio],cat[ratio:]))
         for train_or_test, img_urls in enumerate(split_cat):#0でtrain,1でtest
             for img_url in img_urls:
+                print(img_url)
                 sleep(0.1) #礼儀
                 img, mime = fetcher.fetch(img_url)
                 if not mime or not img:

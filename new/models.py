@@ -2,6 +2,7 @@ from keras import models
 from keras import optimizers
 from keras import layers
 import os
+import base_param as bp
 
 class Models:
     def __init__(self,shape,name):
@@ -32,7 +33,7 @@ class Models:
         model.add(layers.Dense(2, activation='softmax'))
 
         model.compile(
-            loss='binary_crossentropy',
+            loss='categorical_crossentropy',
             optimizer=optimizers.RMSprop(),
             metrics=['accuracy']
         )
@@ -47,8 +48,8 @@ class Models:
         print('loss=', score[0])
         print('accuracy=', score[1])
 
-        if not os.path.exists('./src'):
-            os.mkdir('./src')
-        model.save_weights(filepath='./src/{}_model.h5'.format(self.name))
+        if not os.path.exists(bp.MODEL_PATH):
+            os.mkdir(bp.MODEL_PATH)
+        model.save_weights(filepath= bp.MODEL_PATH + '/{}_model.h5'.format(self.name))
 
         print('info: モデルの保存に成功しました')

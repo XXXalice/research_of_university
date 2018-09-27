@@ -1,5 +1,4 @@
 from img2array import Img2Array
-import os
 from param import base_param as bp
 from models import Models
 
